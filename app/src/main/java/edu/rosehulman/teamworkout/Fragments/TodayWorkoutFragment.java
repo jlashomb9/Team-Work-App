@@ -56,7 +56,7 @@ public class TodayWorkoutFragment extends Fragment implements Toolbar.OnMenuItem
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        mAdapter = new WorkoutAdapter(getActivity(),recyclerView);
+        mAdapter = new WorkoutAdapter(getActivity(),recyclerView, getFragmentManager());
         recyclerView.setAdapter(mAdapter);
         return rootView;
     }

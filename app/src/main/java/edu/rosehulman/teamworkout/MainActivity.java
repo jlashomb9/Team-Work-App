@@ -65,11 +65,11 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
         navigationView.setNavigationItemSelectedListener(this);
 
 
-//        if(mFirebase.getAuth() == null || isExpired(mFirebase.getAuth())){
-//            switchToLoginFragment();
-//        }else {
+        if(mFirebase.getAuth() == null || isExpired(mFirebase.getAuth())){
+            switchToLoginFragment();
+        }else {
             switchToPasswordFragment(Constants.FIREBASE_URL + "/users" + "/");// + mFirebase.getAuth().getUid());
-//        }
+        }
 
     }
 

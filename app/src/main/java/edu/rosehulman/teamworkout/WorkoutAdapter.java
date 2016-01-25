@@ -1,8 +1,12 @@
 package edu.rosehulman.teamworkout;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +14,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.rosehulman.teamworkout.Fragments.ExerciseViewFragment;
+import edu.rosehulman.teamworkout.Fragments.LoginFragment;
+import edu.rosehulman.teamworkout.Fragments.TodayWorkoutFragment;
 
 /**
  * Created by laritzm1 on 1/16/2016.
@@ -19,14 +27,17 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
     private Context mContext;
     private RecyclerView mRecylerView;
     private WorkoutModel mWorkout;
+    private FragmentManager mFragmanager;
 
-    public WorkoutAdapter(FragmentActivity context, RecyclerView recyclerView){
-        this.listOfWorkouts = new ArrayList<>();
-        this.mContext = context;
-        this.mRecylerView = recyclerView;
-        mWorkout = new WorkoutModel();
-        createWorkout();
-    }
+
+    public WorkoutAdapter(FragmentActivity context, RecyclerView recyclerView, FragmentManager fragmentManager) {
+            this.listOfWorkouts = new ArrayList<>();
+            this.mContext = context;
+            this.mRecylerView = recyclerView;
+            mWorkout = new WorkoutModel();
+            createWorkout();
+        mFragmanager = fragmentManager;
+        }
 
     @Override
     public WorkoutAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -36,10 +47,23 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(WorkoutAdapter.ViewHolder holder, int position) {
-        ExerciseModel tmpExercise = mWorkout.getListOfExercises().get(position);
+        final ExerciseModel tmpExercise = mWorkout.getListOfExercises().get(position);
         holder.mExerciseName.setText(tmpExercise.getName());
         holder.mSets.setText("Sets: " +tmpExercise.getSets());
         holder.mReps.setText("Reps: " +tmpExercise.getReps());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = mFragmanager.beginTransaction();
+                ExerciseViewFragment exerciseView = new ExerciseViewFragment();
+                Bundle args = new Bundle();
+                Log.d("Tag", "onClick: " + tmpExercise.getName());
+                args.putParcelable(Constants.EXERCISE, tmpExercise);
+                exerciseView.setArguments(args);
+                ft.replace(R.id.fragment, exerciseView, "Exercises");
+                ft.commit();
+            }
+        });
     }
 
     @Override

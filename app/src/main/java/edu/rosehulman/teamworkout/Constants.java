@@ -10,4 +10,5 @@ public class Constants {
     public static final String FIREBASE_REPO = "lashomjtpasswordkeep";
     public static final String FIREBASE_URL = "https://" + FIREBASE_REPO + ".firebaseio.com/";
     public static final String FIREBASE = "FIREBASE";
+    public static final String EXERCISE = "EXERCISE";
 }

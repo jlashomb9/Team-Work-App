@@ -1,0 +1,69 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.rosehulman.teamworkout.Fragments.CreateWorkoutFragment">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       android:weightSum="1">
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Create A New Workout"
+           android:textSize="35sp"/>
+
+       <EditText
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:hint="Workout Name"
+           android:id="@+id/workoutname"
+           />
+
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <EditText
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/edit_text_exercise_name"
+               android:hint="Exercise Name"
+               />
+           <EditText
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/edit_text_exercise_sets"
+               android:hint="# of Sets"
+               android:inputType="number"
+               />
+           <EditText
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/edit_text_exercise_reps"
+               android:hint="# of reps"
+               android:inputType="number"
+               />
+       </LinearLayout>
+       <Button
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Add Exercise"
+           android:id="@+id/add_new_exercise" />
+
+       <android.support.v7.widget.RecyclerView
+           android:layout_width="wrap_content"
+           android:layout_height="186dp"
+           android:id="@+id/list_of_exercises"
+           android:layout_weight="0.55" />
+       <Button
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Add Workout"
+           android:id="@+id/add_new_workout" />
+   </LinearLayout>
+
+</FrameLayout>

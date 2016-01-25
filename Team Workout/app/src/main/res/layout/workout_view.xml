@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card_view:cardCornerRadius="10dp"
+        android:layout_margin="2dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/exerciseNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Exercise Name"
+                android:textSize="24sp"
+                android:layout_alignParentTop="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sets #"
+                android:id="@+id/setsTextView"
+                android:layout_alignBottom="@+id/exerciseNameTextView"
+                android:layout_toRightOf="@+id/exerciseNameTextView"
+                android:layout_toEndOf="@+id/exerciseNameTextView"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reps #"
+                android:id="@+id/repsTextView"
+                android:layout_alignBottom="@+id/exerciseNameTextView"
+                android:layout_toRightOf="@+id/setsTextView"
+                android:layout_toEndOf="@+id/setsTextView"
+                android:layout_marginLeft="36dp"
+                android:layout_marginStart="36dp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

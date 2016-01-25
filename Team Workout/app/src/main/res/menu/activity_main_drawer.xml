@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/todays_workout"
+            android:title="Todays Workout" />
+        <item
+            android:id="@+id/coach_switch"
+            android:title="Coach Switch" />
+        <item
+            android:id="@+id/create_workout"
+            android:title="Create Workout" />
+        <item
+            android:id="@+id/share_workout"
+            android:title="Share Workout" />
+        <item
+            android:id="@+id/previous_workout"
+            android:title="previous_workout" />
+    </group>
+</menu>

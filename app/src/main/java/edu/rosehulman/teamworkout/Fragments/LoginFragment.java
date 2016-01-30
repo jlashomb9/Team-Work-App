@@ -34,7 +34,7 @@ public class LoginFragment extends Fragment {
     private View mProgressSpinner;
     private boolean mLoggingIn;
     private OnLoginListener mListener;
-
+    private SignInButton mGoogleSignInButton;
 
     public LoginFragment() {
     }
@@ -53,6 +53,11 @@ public class LoginFragment extends Fragment {
         mPasswordView = (EditText) rootView.findViewById(R.id.password);
         mLoginForm = rootView.findViewById(R.id.login_form);
         mProgressSpinner = rootView.findViewById(R.id.login_progress);
+        View loginButton = rootView.findViewById(R.id.email_sign_in_button);
+//        mGoogleSignInButton = (SignInButton) rootView.findViewById(R.id.google_sign_in_button);
+        FloatingActionButton fab = (FloatingActionButton)getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
+
         View rosefireLoginButton = rootView.findViewById(R.id.rosefire_sign_in_button);
         mEmailView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -64,14 +69,28 @@ public class LoginFragment extends Fragment {
                 return false;
             }
         });
-//        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == EditorInfo.IME_NULL) {
+                    login();
+                    return true;
+                }
+                return false;
+            }
+        });
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login();
+            }
+        });
+//        mGoogleSignInButton.setColorScheme(SignInButton.COLOR_LIGHT);
+//        mGoogleSignInButton.setSize(SignInButton.SIZE_WIDE);
+//        mGoogleSignInButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-//                if (id == EditorInfo.IME_NULL) {
-//                    login();
-//                    return true;
-//                }
-//                return false;
+//            public void onClick(View view) {
+//                loginWithGoogle();
 //            }
 //        });
         rosefireLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -80,13 +99,6 @@ public class LoginFragment extends Fragment {
                 loginWithRosefire();
             }
         });
-        FloatingActionButton fab = (FloatingActionButton)getActivity().findViewById(R.id.fab);
-        fab.setVisibility(View.GONE);
-
-//        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-//        drawer.setVisibility(View.INVISIBLE);
-//        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-//        navigationView.setVisibility(View.INVISIBLE);
         return rootView;
     }
 
@@ -133,7 +145,61 @@ public class LoginFragment extends Fragment {
     }
 
 
+    private void loginWithGoogle() {
+        if (mLoggingIn) {
+            return;
+        }
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
 
+        showProgress(true);
+        mLoggingIn = true;
+//        mListener.onGoogleLogin();
+        hideKeyboard();
+    }
+
+
+    public void login() {
+        if (mLoggingIn) {
+            return;
+        }
+
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
+
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+
+        boolean cancelLogin = false;
+        View focusView = null;
+
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.invalid_password));
+            focusView = mPasswordView;
+            cancelLogin = true;
+        }
+
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError(getString(R.string.field_required));
+            focusView = mEmailView;
+            cancelLogin = true;
+        } else if (!isEmailValid(email)) {
+            mEmailView.setError(getString(R.string.invalid_email));
+            focusView = mEmailView;
+            cancelLogin = true;
+        }
+
+        if (cancelLogin) {
+            // error in login
+            focusView.requestFocus();
+        } else {
+            // show progress spinner, and start background task to login
+            showProgress(true);
+            mLoggingIn = true;
+            mListener.onLogin(email, password);
+            hideKeyboard();
+        }
+    }
 
     private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
@@ -185,8 +251,8 @@ public class LoginFragment extends Fragment {
     }
 
     public interface OnLoginListener {
+        void onLogin(String email, String password);
 
         void onRosefireLogin(String email, String password);
     }
-
 }

@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
         if(mFirebase.getAuth() == null || isExpired(mFirebase.getAuth())){
             switchToLoginFragment();
         }else {
-            switchToPasswordFragment(Constants.FIREBASE_URL + "/users" + "/");// + mFirebase.getAuth().getUid());
+            switchToPasswordFragment(Constants.FIREBASE_URL + "/users" + "/"+ mFirebase.getAuth().getUid());
         }
 
     }
@@ -140,6 +140,13 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
 
     }
 
+
+    @Override
+    public void onLogin(String email, String password) {
+        //TODO: Log user in with username & password
+        mFirebase.authWithPassword(email, password, new MyAuthResultHandler());
+
+    }
 
     @Override
     public void onRosefireLogin(String email, String password) {

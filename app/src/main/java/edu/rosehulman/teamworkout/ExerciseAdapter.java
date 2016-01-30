@@ -45,14 +45,14 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
     }
 
     public void addExercise(String name, String sets, String reps) {
-
+        if(name != null || sets != null || reps != null) {
             ExerciseModel model = new ExerciseModel();
             model.setName(name);
             model.setSets(Integer.parseInt(sets));
             model.setReps(Integer.parseInt(reps));
-        mExercises.add(model);
-        notifyDataSetChanged();
-
+            mExercises.add(model);
+            notifyDataSetChanged();
+        }
     }
 
     public List<ExerciseModel> getList(){

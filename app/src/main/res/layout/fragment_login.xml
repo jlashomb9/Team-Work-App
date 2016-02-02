@@ -94,5 +94,16 @@
             android:textColor="@color/white"
             android:textStyle="bold" />
 
+        <Button
+            android:id="@+id/twitter_sign_in_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:text="@string/login_with_twitter"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
     </LinearLayout>
 </LinearLayout>

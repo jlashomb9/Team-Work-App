@@ -28,6 +28,7 @@ public class SearchFragment extends Fragment implements Toolbar.OnMenuItemClickL
 
     private OnLogoutListener mListener;
     private WorkoutAdapter mAdapter;
+
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -45,14 +46,14 @@ public class SearchFragment extends Fragment implements Toolbar.OnMenuItemClickL
         mToolbar.setOnMenuItemClickListener(this);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
-        FloatingActionButton fab = (FloatingActionButton)getActivity().findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setVisibility(View.GONE);
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_past_workouts);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        mAdapter = new WorkoutAdapter(getActivity(),recyclerView, getFragmentManager());
+        mAdapter = new WorkoutAdapter(getActivity(), recyclerView, getFragmentManager());
         recyclerView.setAdapter(mAdapter);
 
         final EditText searchWorkoutName = (EditText) rootView.findViewById(R.id.oldworkoutname);
@@ -63,9 +64,9 @@ public class SearchFragment extends Fragment implements Toolbar.OnMenuItemClickL
             @Override
             public void onClick(View v) {
                 //Only does one of the searches
-                if(searchWorkoutName.getText().length() != 0 && searchWorkoutDate.getText().length() == 0){
+                if (searchWorkoutName.getText().length() != 0 && searchWorkoutDate.getText().length() == 0) {
                     mAdapter.searchWorkout(searchWorkoutName.getText().toString(), true);
-                }else if(searchWorkoutDate.getText().length() != 0 && searchWorkoutName.getText().length() == 0){
+                } else if (searchWorkoutDate.getText().length() != 0 && searchWorkoutName.getText().length() == 0) {
                     mAdapter.searchWorkout(searchWorkoutDate.getText().toString(), false);
                 }
             }
@@ -103,9 +104,10 @@ public class SearchFragment extends Fragment implements Toolbar.OnMenuItemClickL
         return false;
     }
 
-    public interface  OnLogoutListener{
+    public interface OnLogoutListener {
         void onLogout();
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

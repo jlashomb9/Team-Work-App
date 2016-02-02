@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
 
         } else if(id == R.id.todays_workout){
             switchTo = new TodayWorkoutFragment();
-        }else if(id == R.id.search_for_workouts){
+        }else if(id == R.id.search_workout){
             switchTo = new SearchFragment();
         }
 

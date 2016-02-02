@@ -16,6 +16,9 @@
             android:title="Share Workout" />
         <item
             android:id="@+id/previous_workout"
-            android:title="previous_workout" />
+            android:title="Previous Workout" />
+        <item
+            android:id="@+id/search_workout"
+            android:title="Search for Workout" />
     </group>
 </menu>

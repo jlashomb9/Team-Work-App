@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,6 +88,16 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
     }
 
     public void removeWorkout(){
+    }
+
+    public void searchWorkout(String text, boolean bool) {
+        //Do Firebase query
+        if(bool){
+            //If Name
+
+        }else{
+            //If date
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

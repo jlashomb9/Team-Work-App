@@ -35,6 +35,7 @@ import edu.rosehulman.rosefire.RosefireAuth;
 import edu.rosehulman.teamworkout.Fragments.CoachSwitchFragment;
 import edu.rosehulman.teamworkout.Fragments.CreateWorkoutFragment;
 import edu.rosehulman.teamworkout.Fragments.LoginFragment;
+import edu.rosehulman.teamworkout.Fragments.SearchFragment;
 import edu.rosehulman.teamworkout.Fragments.TodayWorkoutFragment;
 
 
@@ -98,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
 
         } else if(id == R.id.todays_workout){
             switchTo = new TodayWorkoutFragment();
+        }else if(id == R.id.search_for_workouts){
+            switchTo = new SearchFragment();
         }
 
         if(switchTo != null){

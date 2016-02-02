@@ -1,88 +1,111 @@
 package edu.rosehulman.teamworkout.Fragments;
 
+
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import edu.rosehulman.teamworkout.R;
+import edu.rosehulman.teamworkout.WorkoutAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SearchFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
-public class SearchFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class SearchFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
+    private OnLogoutListener mListener;
+    private WorkoutAdapter mAdapter;
     public SearchFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_search, container, false);
+
+        Toolbar mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        mToolbar.setTitle(R.string.app_name);
+
+        mToolbar.setOnMenuItemClickListener(this);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
+
+        FloatingActionButton fab = (FloatingActionButton)getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
+
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_past_workouts);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+
+        mAdapter = new WorkoutAdapter(getActivity(),recyclerView, getFragmentManager());
+        recyclerView.setAdapter(mAdapter);
+
+        final EditText searchWorkoutName = (EditText) rootView.findViewById(R.id.oldworkoutname);
+        final EditText searchWorkoutDate = (EditText) rootView.findViewById(R.id.workoutdate);
+
+        final Button searchWorkouts = (Button) rootView.findViewById(R.id.search_for_workouts);
+        searchWorkouts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Only does one of the searches
+                if(searchWorkoutName.getText().length() != 0 && searchWorkoutDate.getText().length() == 0){
+                    mAdapter.searchWorkout(searchWorkoutName.getText().toString(), true);
+                }else if(searchWorkoutDate.getText().length() != 0 && searchWorkoutName.getText().length() == 0){
+                    mAdapter.searchWorkout(searchWorkoutDate.getText().toString(), false);
+                }
+            }
+        });
+        final EditText addWorkoutDate = (EditText) rootView.findViewById(R.id.addworkoutdate);
+        final Button copyWorkout = (Button) rootView.findViewById(R.id.search_for_workouts);
+        copyWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Copy Workout
+                //mAdapter.addWorkout(addWorkoutDate, workoutToAdd);
+            }
+        });
+        return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        int id = menuItem.getItemId();
+        switch (id) {
+            case R.id.action_logout:
+                Log.d("PK", "LOGOUT Menu Item Clicked!");
+                mListener.onLogout();
+                return true;
         }
+        return false;
     }
 
+    public interface  OnLogoutListener{
+        void onLogout();
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+        try {
+            mListener = (OnLogoutListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnLogoutListener");
         }
     }
 
@@ -90,20 +113,5 @@ public class SearchFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

@@ -79,6 +79,14 @@ public class SearchFragment extends Fragment implements Toolbar.OnMenuItemClickL
                 //mAdapter.addWorkout(addWorkoutDate, workoutToAdd);
             }
         });
+        final Button shareWorkout = (Button) rootView.findViewById(R.id.share_old_workout);
+        shareWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Email Workout
+                //mAdapter.shareWorkout(addWorkoutDate, workoutToShare);
+            }
+        });
         return rootView;
     }
 

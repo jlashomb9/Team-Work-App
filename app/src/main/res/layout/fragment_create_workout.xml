@@ -4,66 +4,80 @@
     android:layout_height="match_parent"
     tools:context="edu.rosehulman.teamworkout.Fragments.CreateWorkoutFragment">
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:orientation="vertical"
-       android:weightSum="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Create A New Workout"
-           android:textSize="35sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create A New Workout"
+            android:textSize="35sp" />
 
-       <EditText
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:hint="Workout Name"
-           android:id="@+id/workoutname"
-           />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-       <LinearLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal">
-           <EditText
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:id="@+id/edit_text_exercise_name"
-               android:hint="Exercise Name"
-               />
-           <EditText
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:id="@+id/edit_text_exercise_sets"
-               android:hint="# of Sets"
-               android:inputType="number"
-               />
-           <EditText
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:id="@+id/edit_text_exercise_reps"
-               android:hint="# of reps"
-               android:inputType="number"
-               />
-       </LinearLayout>
-       <Button
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Add Exercise"
-           android:id="@+id/add_new_exercise" />
+            <EditText
+                android:id="@+id/workoutname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Workout Name"
+                android:paddingRight="50dp"/>
 
-       <android.support.v7.widget.RecyclerView
-           android:layout_width="wrap_content"
-           android:layout_height="186dp"
-           android:id="@+id/list_of_exercises"
-           android:layout_weight="0.55" />
-       <Button
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Add Workout"
-           android:id="@+id/add_new_workout" />
-   </LinearLayout>
+            <EditText
+                android:id="@+id/workoutdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="YYYYMMDD" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_text_exercise_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Exercise Name" />
+
+            <EditText
+                android:id="@+id/edit_text_exercise_sets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="# of Sets"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/edit_text_exercise_reps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="# of reps"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/add_new_exercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Exercise" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_of_exercises"
+            android:layout_width="wrap_content"
+            android:layout_height="186dp"
+            android:layout_weight="0.55" />
+
+        <Button
+            android:id="@+id/add_new_workout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Workout" />
+    </LinearLayout>
 
 </FrameLayout>

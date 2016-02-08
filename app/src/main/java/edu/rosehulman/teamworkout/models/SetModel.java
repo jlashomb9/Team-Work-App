@@ -1,4 +1,4 @@
-package edu.rosehulman.teamworkout;
+package edu.rosehulman.teamworkout.models;
 
 /**
  * Created by lashomjt on 1/25/2016.

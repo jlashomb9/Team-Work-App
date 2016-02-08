@@ -5,18 +5,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import edu.rosehulman.teamworkout.Constants;
-import edu.rosehulman.teamworkout.ExerciseModel;
+import edu.rosehulman.teamworkout.models.ExerciseModel;
 import edu.rosehulman.teamworkout.R;
-import edu.rosehulman.teamworkout.SetAdapter;
-import edu.rosehulman.teamworkout.SetModel;
-import edu.rosehulman.teamworkout.WorkoutAdapter;
+import edu.rosehulman.teamworkout.adapters.SetAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

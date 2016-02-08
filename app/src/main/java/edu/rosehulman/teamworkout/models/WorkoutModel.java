@@ -1,4 +1,4 @@
-package edu.rosehulman.teamworkout;
+package edu.rosehulman.teamworkout.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -11,6 +11,7 @@ public class WorkoutModel {
     private List<ExerciseModel> exercises;
     private String workoutDate;
     private String workoutName;
+    private String shareID;
     @JsonIgnore
     private String key;
     public List<ExerciseModel> getExercises() {
@@ -43,5 +44,13 @@ public class WorkoutModel {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getShareID() {
+        return shareID;
+    }
+
+    public void setShareID(String shareID) {
+        this.shareID = shareID;
     }
 }

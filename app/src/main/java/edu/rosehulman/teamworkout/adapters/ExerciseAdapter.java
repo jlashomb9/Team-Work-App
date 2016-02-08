@@ -1,4 +1,4 @@
-package edu.rosehulman.teamworkout;
+package edu.rosehulman.teamworkout.adapters;
 
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.rosehulman.teamworkout.models.ExerciseModel;
+import edu.rosehulman.teamworkout.R;
+import edu.rosehulman.teamworkout.models.SetModel;
 
 /**
  * Created by lashomjt on 1/24/2016.

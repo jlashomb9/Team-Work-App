@@ -3,17 +3,20 @@ package edu.rosehulman.teamworkout.Users;
 /**
  * Created by laritzm1 on 1/16/2016.
  */
-public class Player implements Users {
-    private String username;
-    private String password;
+public class Player  {
+
     private String coachID;
 
-    public Player(String username, String password, String coachID) {
-        createUser(username, password);
+    public Player(){
+
     }
 
-    @Override
-    public void createUser(String username, String password) {
-        //use firebase
+
+    public String getCoachID() {
+        return coachID;
+    }
+
+    public void setCoachID(String coachID) {
+        this.coachID = coachID;
     }
 }

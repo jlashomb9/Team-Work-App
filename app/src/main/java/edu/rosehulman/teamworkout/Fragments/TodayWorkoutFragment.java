@@ -4,9 +4,7 @@ package edu.rosehulman.teamworkout.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +16,7 @@ import android.view.ViewGroup;
 
 import edu.rosehulman.teamworkout.Constants;
 import edu.rosehulman.teamworkout.R;
-import edu.rosehulman.teamworkout.WorkoutAdapter;
+import edu.rosehulman.teamworkout.adapters.WorkoutAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -12,4 +12,6 @@ public class Constants {
     public static final String FIREBASE = "FIREBASE";
     public static final String EXERCISE = "EXERCISE";
     public static final String WORKOUT = "/workouts";
+    public static final String USER_INFO = "/userInfo";
+    public static final String USER_PATH = FIREBASE_URL + "/users";
 }

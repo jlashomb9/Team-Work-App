@@ -1,4 +1,4 @@
-package edu.rosehulman.teamworkout;
+package edu.rosehulman.teamworkout.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +23,13 @@ import com.firebase.client.Query;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.rosehulman.teamworkout.Constants;
+import edu.rosehulman.teamworkout.models.ExerciseModel;
 import edu.rosehulman.teamworkout.Fragments.ExerciseViewFragment;
+import edu.rosehulman.teamworkout.MainActivity;
+import edu.rosehulman.teamworkout.R;
+import edu.rosehulman.teamworkout.models.SetModel;
+import edu.rosehulman.teamworkout.models.WorkoutModel;
 
 /**
  * Created by lashomjt on 2/7/2016.

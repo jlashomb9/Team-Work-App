@@ -1,4 +1,4 @@
-package edu.rosehulman.teamworkout;
+package edu.rosehulman.teamworkout.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.rosehulman.teamworkout.Constants;
+import edu.rosehulman.teamworkout.R;
+import edu.rosehulman.teamworkout.models.SetModel;
 
 /**
  * Created by lashomjt on 1/25/2016.

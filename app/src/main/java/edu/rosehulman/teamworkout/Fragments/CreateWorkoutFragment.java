@@ -16,11 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,12 +24,12 @@ import java.util.Date;
 import java.util.List;
 
 import edu.rosehulman.teamworkout.Constants;
-import edu.rosehulman.teamworkout.ExerciseAdapter;
-import edu.rosehulman.teamworkout.ExerciseModel;
+import edu.rosehulman.teamworkout.adapters.ExerciseAdapter;
+import edu.rosehulman.teamworkout.models.ExerciseModel;
 import edu.rosehulman.teamworkout.MainActivity;
 import edu.rosehulman.teamworkout.R;
-import edu.rosehulman.teamworkout.SetModel;
-import edu.rosehulman.teamworkout.WorkoutModel;
+import edu.rosehulman.teamworkout.models.SetModel;
+import edu.rosehulman.teamworkout.models.WorkoutModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,10 +57,11 @@ public class CreateWorkoutFragment extends Fragment  {
 
         final Button addWorkout = (Button) view.findViewById(R.id.add_new_workout);
         final EditText workoutName = (EditText) view.findViewById(R.id.workoutname);
+        final EditText shareID = (EditText) view.findViewById(R.id.shareID);
         addWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addWorkout(workoutName.getText().toString());
+                addWorkout(workoutName.getText().toString(), shareID.getText().toString());
             }
         });
 
@@ -147,7 +144,7 @@ public class CreateWorkoutFragment extends Fragment  {
         dialogFragment.show(getActivity().getFragmentManager(), "add set");
     }
 
-    private void addWorkout(String name){
+    private void addWorkout(String name, String shareID){
         WorkoutModel model = new WorkoutModel();
         List<ExerciseModel> tmp = new ArrayList<>();
         for(int i =0;i<mAdapter.getItemCount();i++){
@@ -160,6 +157,7 @@ public class CreateWorkoutFragment extends Fragment  {
         Log.d(Constants.TAG, "currentDate: "+ date);
         model.setWorkoutDate(date);
         model.setName(name);
+        model.setShareID(shareID);
 //        MainActivity.allWorkouts.add(model);
         mWorkoutRef.push().setValue(model);
 

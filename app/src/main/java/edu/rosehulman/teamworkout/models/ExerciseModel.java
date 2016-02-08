@@ -1,4 +1,4 @@
-package edu.rosehulman.teamworkout;
+package edu.rosehulman.teamworkout.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

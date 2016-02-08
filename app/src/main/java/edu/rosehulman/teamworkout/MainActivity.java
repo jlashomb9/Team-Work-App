@@ -103,12 +103,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
         Fragment switchTo = null;
         if (id == R.id.coach_switch) {
             switchTo = new CoachSwitchFragment();
-        } else if (id == R.id.previous_workout) {
-
         } else if (id == R.id.create_workout) {
             switchTo = new CreateWorkoutFragment();
-        } else if (id == R.id.share_workout) {
-
         } else if(id == R.id.todays_workout){
             switchTo = new TodayWorkoutFragment();
         }else if(id == R.id.search_workout){

@@ -18,16 +18,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import edu.rosehulman.teamworkout.Constants;
 import edu.rosehulman.teamworkout.R;
+import edu.rosehulman.teamworkout.SearchAdapter;
 import edu.rosehulman.teamworkout.WorkoutAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
+public class SearchFragment extends Fragment  {
 
-    private OnLogoutListener mListener;
-    private WorkoutAdapter mAdapter;
+//    private OnLogoutListener mListener;
+    private SearchAdapter mAdapter;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -41,9 +43,8 @@ public class SearchFragment extends Fragment implements Toolbar.OnMenuItemClickL
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
 
         Toolbar mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        mToolbar.setTitle(R.string.app_name);
+        mToolbar.setTitle("Search a Workout");
 
-        mToolbar.setOnMenuItemClickListener(this);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
@@ -53,7 +54,7 @@ public class SearchFragment extends Fragment implements Toolbar.OnMenuItemClickL
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        mAdapter = new WorkoutAdapter(getActivity(), recyclerView, getFragmentManager());
+        mAdapter = new SearchAdapter(getActivity(), recyclerView, getFragmentManager());
         recyclerView.setAdapter(mAdapter);
 
         final EditText searchWorkoutName = (EditText) rootView.findViewById(R.id.oldworkoutname);
@@ -63,28 +64,32 @@ public class SearchFragment extends Fragment implements Toolbar.OnMenuItemClickL
         searchWorkouts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(Constants.TAG, "onClick: ");
                 //Only does one of the searches
                 if (searchWorkoutName.getText().length() != 0 && searchWorkoutDate.getText().length() == 0) {
                     mAdapter.searchWorkout(searchWorkoutName.getText().toString(), true);
+                    Log.d(Constants.TAG, "searchFragment: name");
                 } else if (searchWorkoutDate.getText().length() != 0 && searchWorkoutName.getText().length() == 0) {
+                    Log.d(Constants.TAG, "searchFragment: date");
                     mAdapter.searchWorkout(searchWorkoutDate.getText().toString(), false);
                 }
             }
         });
         final EditText addWorkoutDate = (EditText) rootView.findViewById(R.id.addworkoutdate);
-        final Button copyWorkout = (Button) rootView.findViewById(R.id.search_for_workouts);
-        copyWorkout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Copy Workout
-                //mAdapter.addWorkout(addWorkoutDate, workoutToAdd);
-            }
-        });
+//        final Button copyWorkout = (Button) rootView.findViewById(R.id.search_for_workouts);
+//        copyWorkout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Copy Workout
+//                //mAdapter.addWorkout(addWorkoutDate, workoutToAdd);
+//            }
+//        });
         final Button shareWorkout = (Button) rootView.findViewById(R.id.share_old_workout);
         shareWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Email Workout
+                mAdapter.emailWorkout();
                 //mAdapter.shareWorkout(addWorkoutDate, workoutToShare);
             }
         });
@@ -92,27 +97,14 @@ public class SearchFragment extends Fragment implements Toolbar.OnMenuItemClickL
     }
 
 
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        int id = menuItem.getItemId();
-        switch (id) {
-            case R.id.action_logout:
-                Log.d("PK", "LOGOUT Menu Item Clicked!");
-                mListener.onLogout();
-                return true;
-        }
-        return false;
-    }
 
-    public interface OnLogoutListener {
-        void onLogout();
-    }
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mListener = (OnLogoutListener) context;
+           // mListener = (OnLogoutListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnLogoutListener");
@@ -122,6 +114,5 @@ public class SearchFragment extends Fragment implements Toolbar.OnMenuItemClickL
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 }

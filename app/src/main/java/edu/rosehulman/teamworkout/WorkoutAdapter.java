@@ -1,6 +1,8 @@
 package edu.rosehulman.teamworkout;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -95,7 +97,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         Log.d(Constants.TAG, "mWorkout: " + listOfWorkouts);
         final ExerciseModel tmpExercise = listOfWorkouts.get(position).getExercises().get(position);
         holder.mExerciseName.setText(tmpExercise.getName());
-        holder.mSets.setText("Sets: " +tmpExercise.getSets().size());
+        holder.mSets.setText("Sets: " + tmpExercise.getSets().size());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,15 +134,6 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
     public void removeWorkout(){
     }
 
-    public void searchWorkout(String text, boolean bool) {
-        //Do Firebase query
-        if(bool){
-            //If Name
-
-        }else{
-            //If date
-        }
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mExerciseName;

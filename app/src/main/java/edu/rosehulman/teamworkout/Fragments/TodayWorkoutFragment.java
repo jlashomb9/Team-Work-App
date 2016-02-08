@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import edu.rosehulman.teamworkout.Constants;
 import edu.rosehulman.teamworkout.R;
 import edu.rosehulman.teamworkout.WorkoutAdapter;
 
@@ -26,10 +27,19 @@ public class TodayWorkoutFragment extends Fragment implements Toolbar.OnMenuItem
 
     private OnLogoutListener mListener;
     private WorkoutAdapter mAdapter;
+    private String userPath;
+
     public TodayWorkoutFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState != null){
+            userPath = getArguments().getString(Constants.FIREBASE);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +66,7 @@ public class TodayWorkoutFragment extends Fragment implements Toolbar.OnMenuItem
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        mAdapter = new WorkoutAdapter(getActivity(),recyclerView, getFragmentManager());
+        mAdapter = new WorkoutAdapter(getActivity(),recyclerView, getFragmentManager(),userPath);
         recyclerView.setAdapter(mAdapter);
         return rootView;
     }

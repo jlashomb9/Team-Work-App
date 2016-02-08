@@ -7,8 +7,9 @@ package edu.rosehulman.teamworkout;
  */
 public class Constants {
     public static final String TAG = "FPK";
-    public static final String FIREBASE_REPO = "lashomjtpasswordkeep";
+    public static final String FIREBASE_REPO = "team-work-app";
     public static final String FIREBASE_URL = "https://" + FIREBASE_REPO + ".firebaseio.com/";
     public static final String FIREBASE = "FIREBASE";
     public static final String EXERCISE = "EXERCISE";
+    public static final String WORKOUT = "/workouts";
 }

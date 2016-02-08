@@ -19,6 +19,9 @@
             android:title="Previous Workout" />
         <item
             android:id="@+id/search_workout"
-            android:title="Search for Workout" />
+            android:title="Search for Workout" 
+        <item
+            android:id="@+id/sign_out"
+            android:title="Log Out"/>
     </group>
 </menu>

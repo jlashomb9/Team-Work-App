@@ -1,36 +1,47 @@
 package edu.rosehulman.teamworkout;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 /**
  * Created by laritzm1 on 1/16/2016.
  */
 public class WorkoutModel {
-    private List<ExerciseModel> listOfExercises;
-    private Date workoutDate;
-    private String name;
-    public List<ExerciseModel> getListOfExercises() {
-        return listOfExercises;
+    private List<ExerciseModel> exercises;
+    private String workoutDate;
+    private String workoutName;
+    @JsonIgnore
+    private String key;
+    public List<ExerciseModel> getExercises() {
+        return exercises;
     }
 
-    public void setListOfExercises(List<ExerciseModel> listOfExercises) {
-        this.listOfExercises = listOfExercises;
+    public void setExercises(List<ExerciseModel> exercises) {
+        this.exercises = exercises;
     }
 
     public String getName() {
-        return name;
+        return workoutName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.workoutName = name;
     }
 
-    public Date getWorkoutDate() {
+    public String getWorkoutDate() {
         return workoutDate;
     }
 
-    public void setWorkoutDate(Date workoutDate) {
+    public void setWorkoutDate(String workoutDate) {
         this.workoutDate = workoutDate;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

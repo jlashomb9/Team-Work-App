@@ -1,6 +1,7 @@
 package edu.rosehulman.teamworkout.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -9,18 +10,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.common.SignInButton;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.rosehulman.teamworkout.R;
+import twitter4j.Twitter;
 
 
 /**
@@ -35,6 +42,8 @@ public class LoginFragment extends Fragment {
     private boolean mLoggingIn;
     private OnLoginListener mListener;
     private SignInButton mGoogleSignInButton;
+    private View mTwitterSigninButton;
+
 
     public LoginFragment() {
     }
@@ -57,7 +66,13 @@ public class LoginFragment extends Fragment {
 //        mGoogleSignInButton = (SignInButton) rootView.findViewById(R.id.google_sign_in_button);
         FloatingActionButton fab = (FloatingActionButton)getActivity().findViewById(R.id.fab);
         fab.setVisibility(View.GONE);
-
+        mTwitterSigninButton = rootView.findViewById(R.id.twitter_sign_in_button);
+        mTwitterSigninButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginWithTwitter();
+            }
+        });
         View rosefireLoginButton = rootView.findViewById(R.id.rosefire_sign_in_button);
         mEmailView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -142,6 +157,18 @@ public class LoginFragment extends Fragment {
             hideKeyboard();
         }
 
+    }
+    private void loginWithTwitter(){
+        if(mLoggingIn){
+            return;
+        }
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
+
+        showProgress(true);
+        mLoggingIn = true;
+        mListener.onTwitterLogin();
+        hideKeyboard();
     }
 
 
@@ -254,5 +281,7 @@ public class LoginFragment extends Fragment {
         void onLogin(String email, String password);
 
         void onRosefireLogin(String email, String password);
+
+        void onTwitterLogin();
     }
 }

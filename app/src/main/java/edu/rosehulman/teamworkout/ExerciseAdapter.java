@@ -35,8 +35,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
     public void onBindViewHolder(ExerciseAdapter.ViewHolder holder, int position) {
         ExerciseModel tmpExercise = mExercises.get(position);
         holder.mExerciseName.setText(tmpExercise.getName());
-        holder.mSets.setText("Sets: " +tmpExercise.getSets());
-        holder.mReps.setText("Reps: " +tmpExercise.getReps());
+        holder.mSets.setText("Sets: " +tmpExercise.getSets().size());
     }
 
     @Override
@@ -44,28 +43,23 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         return mExercises.size();
     }
 
-    public void addExercise(String name, String sets, String reps) {
-        if(name != null || sets != null || reps != null) {
-            ExerciseModel model = new ExerciseModel();
-            model.setName(name);
-            model.setSets(Integer.parseInt(sets));
-            model.setReps(Integer.parseInt(reps));
-            mExercises.add(model);
-            notifyDataSetChanged();
-        }
-    }
-
     public List<ExerciseModel> getList(){
         return mExercises;
     }
+
+    public void addExercise(String name, List<SetModel> list_of_sets) {
+        ExerciseModel exercise = new ExerciseModel();
+        exercise.setName(name);
+        exercise.setSets(list_of_sets);
+        mExercises.add(exercise);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mExerciseName;
         private TextView mSets;
-        private TextView mReps;
         public ViewHolder(View itemView) {
             super(itemView);
             mExerciseName = (TextView) itemView.findViewById(R.id.exerciseNameTextView);
-            mReps = (TextView) itemView.findViewById(R.id.repsTextView);
             mSets = (TextView) itemView.findViewById(R.id.setsTextView);
         }
     }

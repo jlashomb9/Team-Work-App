@@ -1,6 +1,7 @@
 package edu.rosehulman.teamworkout;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +17,18 @@ import java.util.List;
  */
 public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     private List<SetModel> mSets;
-    private int numReps;
 
 
-    public SetAdapter(int reps){
+    public SetAdapter(List<SetModel> reps){
         this.mSets = new ArrayList();
-        numReps = reps;
-        createSets();
+        Log.d(Constants.TAG, "SetAdapter: " + mSets);
+        mSets = reps;
+        notifyDataSetChanged();
+
     }
 
     private void createSets() {
-        for(int i =0;i<numReps;i++){
-            SetModel set = new SetModel();
-            set.setReps(i);
-            set.setWeight(i*100);
-            mSets.add(set);
-        }
+
     }
 
     @Override

@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebView;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
@@ -29,7 +31,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.rosehulman.rosefire.RosefireAuth;
 import edu.rosehulman.teamworkout.Fragments.CoachSwitchFragment;
@@ -37,11 +41,18 @@ import edu.rosehulman.teamworkout.Fragments.CreateWorkoutFragment;
 import edu.rosehulman.teamworkout.Fragments.LoginFragment;
 import edu.rosehulman.teamworkout.Fragments.SearchFragment;
 import edu.rosehulman.teamworkout.Fragments.TodayWorkoutFragment;
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
 
 
 public class MainActivity extends AppCompatActivity implements LoginFragment.OnLoginListener, TodayWorkoutFragment.OnLogoutListener, GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
     private Firebase mFirebase;
     public static List<WorkoutModel> allWorkouts = new ArrayList<>();
+    private WebView mTwitterView;
+    private Twitter mTwitter;
+    public static final int RC_TWITTER_LOGIN = 2;
+    public static String USER_AUTH;
 
 
     @Override
@@ -68,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
 
         if(mFirebase.getAuth() == null || isExpired(mFirebase.getAuth())){
             switchToLoginFragment();
+
         }else {
             switchToPasswordFragment(Constants.FIREBASE_URL + "/users" + "/"+ mFirebase.getAuth().getUid());
         }
@@ -101,6 +113,9 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
             switchTo = new TodayWorkoutFragment();
         }else if(id == R.id.search_workout){
             switchTo = new SearchFragment();
+
+        }else if(id == R.id.sign_out){
+            onLogout();
         }
 
         if(switchTo != null){
@@ -128,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
 
         @Override
         public void onAuthenticated(AuthData authData) {
-            switchToPasswordFragment(Constants.FIREBASE_URL + "/users" + "/" + authData.getUid());
+            switchToPasswordFragment(Constants.FIREBASE_URL + "users/" + authData.getUid());
         }
 
         @Override
@@ -159,8 +174,29 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
     }
 
     @Override
+    public void onTwitterLogin() {
+        startActivityForResult(new Intent(this, TwitterOAuthActivity.class), RC_TWITTER_LOGIN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Map<String, String> options = new HashMap<String, String>();
+        if(requestCode == RC_TWITTER_LOGIN){
+            options.put("oauth_token", data.getStringExtra("oauth_token"));
+            options.put("oauth_token_secret", data.getStringExtra("oauth_token_secret"));
+            options.put("user_id", data.getStringExtra("user_id"));
+            onTwitterLogin("twitter", options);
+        }
+    }
+
+    private void onTwitterLogin(final String provider, Map<String, String> options) {
+        Log.d(Constants.TAG, "onTwitterLoginWithToken: ");
+        mFirebase.authWithOAuthToken(provider, options, new MyAuthResultHandler());
+    }
+
+    @Override
     public void onLogout() {        
-        //TODO: Log the user out.
+        //DONE: Log the user out.
         mFirebase.unauth();
         switchToLoginFragment();
     }
@@ -173,11 +209,13 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
     }
 
     private void switchToPasswordFragment(String repoUrl) {
+        USER_AUTH =repoUrl;
+        Log.d(Constants.TAG, "switchToPasswordFragment: " + repoUrl);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//        Fragment passwordFragment = new PasswordFragment();
-//        Bundle args = new Bundle();
-//        args.putString(Constants.FIREBASE, repoUrl);
-//        passwordFragment.setArguments(args);
+        Fragment todays_workout_fragment = new TodayWorkoutFragment();
+        Bundle args = new Bundle();
+        args.putString(Constants.FIREBASE, repoUrl);
+        todays_workout_fragment.setArguments(args);
         ft.replace(R.id.fragment, new TodayWorkoutFragment(), "Todays Workout");
         ft.commit();
     }

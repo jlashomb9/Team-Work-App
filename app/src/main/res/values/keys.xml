@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="rose_fire_token">3814ec77fc739ab3aed6595bb5c1a18c0eb24a24d9fc63804139d4f653fe2da4a99d85f281015268b7faabb59bb4656b5MuErfDMgcMBP2WsWaofMSU3XM4GEVUpRLoAIt5/u7hk3DvIr8fVGqD7Z41IZSWhKtv+/W2VaJ8uoGZZbraDJJu8P8xW7EK7YzITY8G+UPzfk888fQHYKbeDQfeFcncM</string>
+    <string name="twitter_key">ZeJoHHt6nFcprXdmExxSEm0pQ </string>
+    <string name="twitter_secret">4mT7rJMrqJf6wIzFysb5Ed8vRWHOVWjtmWOTGotWfNox2qzyw2</string>
 </resources>

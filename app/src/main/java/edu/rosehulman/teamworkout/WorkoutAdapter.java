@@ -13,12 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import edu.rosehulman.teamworkout.Fragments.ExerciseViewFragment;
-import edu.rosehulman.teamworkout.Fragments.LoginFragment;
-import edu.rosehulman.teamworkout.Fragments.TodayWorkoutFragment;
 
 /**
  * Created by laritzm1 on 1/16/2016.
@@ -29,16 +36,53 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
     private RecyclerView mRecylerView;
     private WorkoutModel mWorkout;
     private FragmentManager mFragmanager;
+    private String firebaseUserPath;
 
 
-    public WorkoutAdapter(FragmentActivity context, RecyclerView recyclerView, FragmentManager fragmentManager) {
+    public WorkoutAdapter(FragmentActivity context, RecyclerView recyclerView, FragmentManager fragmentManager, String userPath) {
             this.listOfWorkouts = new ArrayList<>();
             this.mContext = context;
             this.mRecylerView = recyclerView;
             mWorkout = new WorkoutModel();
-            createWorkout();
-        mFragmanager = fragmentManager;
+            this.firebaseUserPath = userPath;
+            addTodaysWorkout();
+            mFragmanager = fragmentManager;
         }
+
+    private void addTodaysWorkout() {
+        Date currentDate = new Date();
+        String date = new SimpleDateFormat("yyyyMMdd").format(currentDate);
+        Firebase ref = new Firebase(MainActivity.USER_AUTH + Constants.WORKOUT);
+        Query todays_workout = ref.orderByChild("workoutDate").equalTo(date);
+        todays_workout.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                WorkoutModel workoutModel = dataSnapshot.getValue(WorkoutModel.class);
+                listOfWorkouts.add(workoutModel);
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
 
     @Override
     public WorkoutAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -48,10 +92,10 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(WorkoutAdapter.ViewHolder holder, int position) {
-        final ExerciseModel tmpExercise = mWorkout.getListOfExercises().get(position);
+        Log.d(Constants.TAG, "mWorkout: " + listOfWorkouts);
+        final ExerciseModel tmpExercise = listOfWorkouts.get(position).getExercises().get(position);
         holder.mExerciseName.setText(tmpExercise.getName());
-        holder.mSets.setText("Sets: " +tmpExercise.getSets());
-        holder.mReps.setText("Reps: " +tmpExercise.getReps());
+        holder.mSets.setText("Sets: " +tmpExercise.getSets().size());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +113,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mWorkout.getListOfExercises().size();
+        return listOfWorkouts.size();
     }
 
     public void createWorkout() {
@@ -77,11 +121,9 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         for(int i= 0;i<5;i++){
             ExerciseModel mExercise = new ExerciseModel();
             mExercise.setName("Name" +i);
-            mExercise.setReps(i);
-            mExercise.setSets(i);
             tmp.add(mExercise);
         }
-        mWorkout.setListOfExercises(tmp);
+        mWorkout.setExercises(tmp);
         listOfWorkouts.add(mWorkout);
     }
     public void editWorkout(){

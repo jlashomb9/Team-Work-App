@@ -3,14 +3,14 @@ package edu.rosehulman.teamworkout;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by laritzm1 on 1/16/2016.
  */
 public class ExerciseModel implements Parcelable {
     private String name;
-    private int sets;
-    private int reps;
-    private int weight;
+    private List<SetModel> sets;
 
     public ExerciseModel(){
         //blank for now
@@ -18,9 +18,7 @@ public class ExerciseModel implements Parcelable {
 
     protected ExerciseModel(Parcel in) {
         name = in.readString();
-        sets = in.readInt();
-        reps = in.readInt();
-        weight = in.readInt();
+        sets = in.readArrayList(SetModel.class.getClassLoader());
     }
 
     public static final Creator<ExerciseModel> CREATOR = new Creator<ExerciseModel>() {
@@ -43,28 +41,11 @@ public class ExerciseModel implements Parcelable {
         this.name = name;
     }
 
-    public int getSets() {
+    public List<SetModel> getSets(){
         return sets;
     }
-
-    public void setSets(int sets) {
+    public void setSets(List<SetModel> sets){
         this.sets = sets;
-    }
-
-    public int getReps() {
-        return reps;
-    }
-
-    public void setReps(int reps) {
-        this.reps = reps;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
     }
 
     @Override
@@ -75,8 +56,7 @@ public class ExerciseModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeInt(sets);
-        dest.writeInt(reps);
-        dest.writeInt(weight);
+        dest.writeList(sets);
+
     }
 }

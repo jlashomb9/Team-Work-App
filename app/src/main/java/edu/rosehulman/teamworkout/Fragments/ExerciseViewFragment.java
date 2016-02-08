@@ -48,7 +48,7 @@ public class ExerciseViewFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        mAdapter = new SetAdapter(mExercise.getReps());
+        mAdapter = new SetAdapter(mExercise.getSets());
         recyclerView.setAdapter(mAdapter);
 
         TextView exerciseName = (TextView) view.findViewById(R.id.exercise_name);

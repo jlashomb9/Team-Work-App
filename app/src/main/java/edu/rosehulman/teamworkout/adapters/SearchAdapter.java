@@ -69,10 +69,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 FragmentTransaction ft = mFragmanager.beginTransaction();
                 ExerciseViewFragment exerciseView = new ExerciseViewFragment();
                 Bundle args = new Bundle();
-                Log.d("Tag", "onClick: " + tmpExercise.getName());
                 args.putParcelable(Constants.EXERCISE, tmpExercise);
                 exerciseView.setArguments(args);
                 ft.replace(R.id.fragment, exerciseView, "Exercises");
+                ft.addToBackStack("search_exercises");
                 ft.commit();
             }
         });
@@ -84,7 +84,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     public void searchWorkout(String text, boolean bool) {
-        Firebase ref = new Firebase(MainActivity.USER_AUTH + Constants.WORKOUT);
+        Firebase ref = new Firebase(MainActivity.USER_AUTH);
         Log.d(Constants.TAG, "searchWorkout: " + ref.getPath()
         );
         //Do Firebase query
@@ -124,7 +124,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         }else{
             //If date
-            Log.d(Constants.TAG, "searchWorkout: Date");
             Query todays_workout = ref.orderByChild("workoutDate").equalTo(text);
             todays_workout.addChildEventListener(new ChildEventListener() {
                 @Override
@@ -155,7 +154,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 }
             });
         }
-        Log.d(Constants.TAG, "searched Workouts: " + listOfWorkouts);
+
     }
 
     public void emailWorkout() {
@@ -185,11 +184,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mExerciseName;
         private TextView mSets;
-        private TextView mReps;
         public ViewHolder(View itemView) {
             super(itemView);
             mExerciseName = (TextView) itemView.findViewById(R.id.exerciseNameTextView);
-            mReps = (TextView) itemView.findViewById(R.id.repsTextView);
             mSets = (TextView) itemView.findViewById(R.id.setsTextView);
         }
 

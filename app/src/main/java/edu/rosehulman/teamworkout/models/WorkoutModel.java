@@ -11,7 +11,7 @@ public class WorkoutModel {
     private List<ExerciseModel> exercises;
     private String workoutDate;
     private String workoutName;
-    private String shareID;
+    private String playerName;
     @JsonIgnore
     private String key;
     public List<ExerciseModel> getExercises() {
@@ -46,11 +46,12 @@ public class WorkoutModel {
         this.key = key;
     }
 
-    public String getShareID() {
-        return shareID;
+
+    public String getPlayerName() {
+        return playerName;
     }
 
-    public void setShareID(String shareID) {
-        this.shareID = shareID;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 }

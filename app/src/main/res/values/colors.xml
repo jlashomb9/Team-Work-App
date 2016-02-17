@@ -6,4 +6,5 @@
     <color name="white">#ffffffff</color>
     <color name="accent">#ffffff</color>
     <color name="warning">#FF5722</color>
+    <color name="background">#7986CB</color>
 </resources>

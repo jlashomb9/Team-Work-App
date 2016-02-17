@@ -71,15 +71,6 @@ public class SearchFragment extends Fragment  {
                 }
             }
         });
-        final EditText addWorkoutDate = (EditText) rootView.findViewById(R.id.addworkoutdate);
-//        final Button copyWorkout = (Button) rootView.findViewById(R.id.search_for_workouts);
-//        copyWorkout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // TODO Copy Workout
-//                //mAdapter.addWorkout(addWorkoutDate, workoutToAdd);
-//            }
-//        });
         final Button shareWorkout = (Button) rootView.findViewById(R.id.share_old_workout);
         shareWorkout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -41,21 +41,11 @@
             android:layout_height="186dp"
             android:id="@+id/list_of_past_workouts"
             android:layout_weight="0.55" />
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="YYYYMMDD"
-            android:id="@+id/addworkoutdate"
-            />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Copy Workout"
-                android:id="@+id/add_old_workout" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

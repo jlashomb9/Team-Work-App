@@ -24,7 +24,7 @@ public class TwitterOAuthActivity extends Activity {
     private static final String TAG = TwitterOAuthActivity.class.getSimpleName();
 
     private WebView mTwitterView;
-
+    public static String name;
     private Twitter mTwitter;
 
     @Override
@@ -85,6 +85,7 @@ public class TwitterOAuthActivity extends Activity {
                 AccessToken accessToken = null;
                 try {
                     accessToken = mTwitter.getOAuthAccessToken(requestToken, oauthVerifier);
+                    name = accessToken.getScreenName();
                 } catch (TwitterException te) {
                     Log.e(TAG, te.toString());
                 }

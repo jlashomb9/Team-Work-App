@@ -2,44 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.rosehulman.teamworkout.Fragments.CoachSwitchFragment"
-    android:background="@color/primary">
+    tools:context="edu.rosehulman.teamworkout.Fragments.CoachSwitchFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="40sp"
-            android:text="Switch Your Coach"
-            android:textColor="@color/white"/>
+            android:text="Add Players"/>
 
-        <EditText
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextCoachID"
-            android:hint="Coach ID number"
-            android:layout_marginTop="142dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_height="match_parent"
+            android:id="@+id/players_rv"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Change Coach"
-            android:id="@+id/changeCoachbutton"
-            android:layout_marginRight="55dp"
-            android:layout_marginEnd="55dp"
-            android:layout_below="@+id/editText"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+    </LinearLayout>
 
 
-    </RelativeLayout>
+
 
 
 </FrameLayout>

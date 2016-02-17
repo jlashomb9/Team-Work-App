@@ -43,6 +43,7 @@ public class LoginFragment extends Fragment {
     private OnLoginListener mListener;
     private SignInButton mGoogleSignInButton;
     private View mTwitterSigninButton;
+    public static String loginName;
 
 
     public LoginFragment() {
@@ -126,6 +127,7 @@ public class LoginFragment extends Fragment {
         mPasswordView.setError(null);
 
         String email = mEmailView.getText().toString();
+        loginName = email;
 
         String password = mPasswordView.getText().toString();
 
@@ -196,7 +198,7 @@ public class LoginFragment extends Fragment {
 
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-
+        loginName = email.split("@")[0];
         boolean cancelLogin = false;
         View focusView = null;
 

@@ -13,10 +13,29 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.rosehulman.teamworkout.Constants;
+import edu.rosehulman.teamworkout.MainActivity;
 import edu.rosehulman.teamworkout.R;
 import edu.rosehulman.teamworkout.adapters.WorkoutAdapter;
+import edu.rosehulman.teamworkout.models.Player;
+
+import static android.R.layout.simple_dropdown_item_1line;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +45,7 @@ public class TodayWorkoutFragment extends Fragment implements Toolbar.OnMenuItem
     private OnLogoutListener mListener;
     private WorkoutAdapter mAdapter;
     private String userPath;
+    private List<String> coachList;
 
     public TodayWorkoutFragment() {
         // Required empty public constructor
@@ -40,7 +60,7 @@ public class TodayWorkoutFragment extends Fragment implements Toolbar.OnMenuItem
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_today_workout, container, false);
@@ -60,14 +80,34 @@ public class TodayWorkoutFragment extends Fragment implements Toolbar.OnMenuItem
 //        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
 //        navigationView.setVisibility(View.VISIBLE);
 
+
+
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.today_exercise_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        mAdapter = new WorkoutAdapter(getActivity(),recyclerView, getFragmentManager(),userPath);
+        TextView todaysWorkoutName = (TextView) rootView.findViewById(R.id.todays_workout_name);
+        TextView todaysWorkoutDate = (TextView) rootView.findViewById(R.id.todays_workout_date);
+
+        mAdapter = new WorkoutAdapter(getActivity(),recyclerView, getFragmentManager(),userPath, todaysWorkoutName, todaysWorkoutDate);
         recyclerView.setAdapter(mAdapter);
+
+
+        Button completeWorkoutButton = (Button) rootView.findViewById(R.id.complete_button_workout);
+        completeWorkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.removeFromFirebase();
+            }
+        });
+
+
         return rootView;
     }
+
+
+
+
 
 
     @Override
@@ -81,6 +121,8 @@ public class TodayWorkoutFragment extends Fragment implements Toolbar.OnMenuItem
         }
         return false;
     }
+
+
 
     public interface  OnLogoutListener{
         void onLogout();

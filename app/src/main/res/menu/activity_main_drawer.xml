@@ -7,7 +7,7 @@
             android:title="Todays Workout" />
         <item
             android:id="@+id/coach_switch"
-            android:title="Coach Switch" />
+            android:title="Add Players" />
         <item
             android:id="@+id/create_workout"
             android:title="Create Workout" />

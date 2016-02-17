@@ -32,15 +32,13 @@
                 android:id="@+id/workoutdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="date"
                 android:hint="YYYYMMDD" />
 
-            <EditText
-                android:id="@+id/shareID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Share id" />
 
         </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -53,19 +51,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Exercise Name" />
 
-            <EditText
-                android:id="@+id/edit_text_exercise_sets"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="# of Sets"
-                android:inputType="number" />
 
-            <EditText
-                android:id="@+id/edit_text_exercise_reps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="# of reps"
-                android:inputType="number" />
         </LinearLayout>
 
         <Button

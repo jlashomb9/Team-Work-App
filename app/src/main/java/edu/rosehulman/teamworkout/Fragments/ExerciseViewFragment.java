@@ -2,6 +2,7 @@ package edu.rosehulman.teamworkout.Fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +41,9 @@ public class ExerciseViewFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_exercise_view, container, false);
+
+        FloatingActionButton fab = (FloatingActionButton)getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_of_sets);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -13,8 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.google.android.gms.common.ConnectionResult;
@@ -31,17 +34,17 @@ import edu.rosehulman.teamworkout.Fragments.CreateWorkoutFragment;
 import edu.rosehulman.teamworkout.Fragments.LoginFragment;
 import edu.rosehulman.teamworkout.Fragments.SearchFragment;
 import edu.rosehulman.teamworkout.Fragments.TodayWorkoutFragment;
+import edu.rosehulman.teamworkout.models.Player;
 import edu.rosehulman.teamworkout.models.WorkoutModel;
 import twitter4j.Twitter;
 
 
 public class MainActivity extends AppCompatActivity implements LoginFragment.OnLoginListener, TodayWorkoutFragment.OnLogoutListener, GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
     private Firebase mFirebase;
-    public static List<WorkoutModel> allWorkouts = new ArrayList<>();
-    private WebView mTwitterView;
-    private Twitter mTwitter;
     public static final int RC_TWITTER_LOGIN = 2;
     public static String USER_AUTH;
+
+    public static String userName;
 
 
     @Override
@@ -55,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -70,7 +72,9 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
             switchToLoginFragment();
 
         }else {
-            switchToPasswordFragment(Constants.FIREBASE_URL + "/users" + "/"+ mFirebase.getAuth().getUid());
+
+            switchToPasswordFragment(Constants.FIREBASE_URL + "/users" + "/" + mFirebase.getAuth().getUid());
+
         }
 
     }
@@ -148,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
     public void onLogin(String email, String password) {
         //TODO: Log user in with username & password
         mFirebase.authWithPassword(email, password, new MyAuthResultHandler());
+        userName = LoginFragment.loginName;
 
     }
 
@@ -155,8 +160,10 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
     public void onRosefireLogin(String email, String password) {
         RosefireAuth roseAuth = new RosefireAuth(mFirebase, getString(R.string.rose_fire_token));
         roseAuth.authWithRoseHulman(email, password, new MyAuthResultHandler());
-
+        userName = LoginFragment.loginName;
     }
+
+
 
     @Override
     public void onTwitterLogin() {
@@ -175,8 +182,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
     }
 
     private void onTwitterLogin(final String provider, Map<String, String> options) {
-        Log.d(Constants.TAG, "onTwitterLoginWithToken: ");
         mFirebase.authWithOAuthToken(provider, options, new MyAuthResultHandler());
+        userName = TwitterOAuthActivity.name;
     }
 
     @Override
@@ -194,8 +201,9 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnL
     }
 
     private void switchToPasswordFragment(String repoUrl) {
-        USER_AUTH =repoUrl;
+        USER_AUTH = repoUrl;
         Log.d(Constants.TAG, "switchToPasswordFragment: " + repoUrl);
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment todays_workout_fragment = new TodayWorkoutFragment();
         Bundle args = new Bundle();
